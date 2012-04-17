@@ -1,7 +1,7 @@
 Scrapbook
 =====
 
-**Visualize your Flickr photos**
+**Visualize your Flickr photos in a cool way**
 
 Written by Irving Y. Ruan [irvingruan@gmail.com](irvingruan@gmail.com)
 
@@ -11,7 +11,7 @@ Scrapbook is a Python tool that grabs your (or anybody's public) Flickr photos a
 
 ## Requirements
 
-TO DO
+You will need to sign up for a Flickr API key, which is free! After you [sign up](http://www.flickr.com/services/api/misc.api_keys.html) for a key, you will need to add it to the included `API_KEY.txt`.
 
 ## Usage
 
