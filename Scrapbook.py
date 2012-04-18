@@ -23,12 +23,12 @@ import statichtml
 import errno
 from getopt import getopt, GetoptError
 
-flickr_gallery_path = os.path.expanduser('~/Desktop/Scrapbook/')
+scrapbook_gallery_path = os.path.expanduser('~/Desktop/Scrapbook/')
 
 def create_scrapbook_dir():
  
     try:
-        os.makedirs(flickr_gallery_path)
+        os.makedirs(scrapbook_gallery_path)
     except OSError, e:
         if e.errno != errno.EEXIST:
             raise Exception("Scrapbook directory already exists!")
@@ -53,6 +53,24 @@ def generate_html(urls):
     except:
         sys.stderr.write("Error: Unable to generate index.html.")
         sys.exit(-1)          
+
+def make_scrapbook_data():
+    
+    try:
+        # Copy over the .html, .js, and .css files
+        shutil.move(os.getcwd() + "/index.html", scrapbook_gallery_path)
+        
+        rv = subprocess.Popen('cp -rf ' + os.getcwd() + '/website/. ' + scrapbook_gallery_path, shell=True)
+        rv.wait()
+        
+        # Fire up Safari to see the result
+        rv = subprocess.Popen('open /Applications/Safari.app ' + scrapbook_gallery_path + '/index.html', shell=True)
+        rv.wait()
+        
+    except:
+        sys.stderr.write("Error: Could not produce Scrapbook HTML/CSS files.\n")
+        sys.exit(-1)
+
 
 def get_url(photo, size, equal=False):
     """Retrieves a url for the photo.  (flickr.photos.getSizes)
@@ -83,6 +101,11 @@ def get_photo_urls(group_id, size, number, equal=False):
             if verbose:
                 print "%s has no URL for %s" % (photo, size)
     return urls
+    
+def grab_api_key():
+    api_key_file = open('API_KEY.txt', 'r')
+    
+    
 
 def main(*argv):
     try:
@@ -123,8 +146,6 @@ def main(*argv):
     urls = get_photo_urls(group_id, size, number, equal)
     
     create_scrapbook_dir()
-    for url in urls:
-        print str(url)
     generate_html(urls)
 
 if __name__ == "__main__":
