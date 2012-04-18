@@ -21,6 +21,8 @@ import flickr
 import urllib
 import statichtml
 import errno
+import shutil
+import subprocess
 from getopt import getopt, GetoptError
 
 scrapbook_gallery_path = os.path.expanduser('~/Desktop/Scrapbook/')
@@ -102,15 +104,6 @@ def get_photo_urls(group_id, size, number, equal=False):
                 print "%s has no URL for %s" % (photo, size)
     return urls
     
-def grab_api_key():
-    api_key_file = open('config.py', 'r')
-    
-    api_key_file.readline()
-    api_key_file.readline()
-    api_key = api_key_file.readline().split('=')[1]
-    api_secret = api_key_file.readline().split('=')[1]
-    
-    
 def main(*argv):
     try:
         (opts, args) = getopt(argv[1:],\
@@ -146,14 +139,13 @@ def main(*argv):
         sys.exit(0)   
         
     group_id = sys.argv[1]
-    grab_api_key()
     
+    print "...Grabbing URLs for photos..."
     urls = get_photo_urls(group_id, size, number, equal)
-    
-    
     
     create_scrapbook_dir()
     generate_html(urls)
+    make_scrapbook_data()
 
 if __name__ == "__main__":
     main()
