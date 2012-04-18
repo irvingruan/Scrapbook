@@ -29,13 +29,14 @@ from urllib import urlencode, urlopen
 from xml.dom import minidom
 import hashlib
 import os
+import config
 
 HOST = 'http://flickr.com'
 API = '/services/rest'
 
 # set these here or using flickr.API_KEY in your application
-API_KEY = ''
-API_SECRET = ''
+API_KEY = config.API_KEY
+API_SECRET = config.API_SECRET
 email = None
 password = None
 AUTH = False

@@ -1,2 +1,0 @@
-API_KEY = Your_Flickr_API_Key
-API_SECRET = Your_Flickr_API_Secret
