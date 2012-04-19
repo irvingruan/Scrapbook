@@ -11,7 +11,7 @@ Scrapbook is a Python tool that grabs your (or anybody's public) Flickr photos a
 
 ## Requirements
 
-You will need to [sign up](http://www.flickr.com/services/api/misc.api_keys.html)) for a Flickr API key, which is free! After you get a key (which is right after you sign up), you will need to add it to the included file, `config.py`.
+You will need to [sign up](http://www.flickr.com/services/api/misc.api_keys.html) for a Flickr API key, which is free! After you get a key (which is right after you sign up), you will need to add it to the included file, `config.py`.
 
 Just paste in your key and secret that Flickr provides for you in the the `API_KEY` and `API_SECRET` fields and you're set. Unfortunately, I cannot provide *my* Flickr key and secret, as that would bring up issues of potential abuse. ;-)
 
@@ -40,7 +40,7 @@ Will generate the visualization for all photos in that Photoset.
 
 ## Legal
 
-Scrapbook is Copyright (c) 2012 Irving Ruan and is BSD licensed. The full text of the license can be found in LICENSE.
+Scrapbook is Copyright (c) 2012 Irving Ruan and BSD licensed. The full text of the license can be found in LICENSE.
 
 
 
