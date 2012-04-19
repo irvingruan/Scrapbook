@@ -5,6 +5,12 @@ Scrapbook
 
 Written by Irving Y. Ruan [irvingruan@gmail.com](irvingruan@gmail.com)
 
+![Roundabout](https://github.com/irvingruan/Scrapbook/raw/master/samples/Roundabout.png)
+
+![Cover Flow](https://github.com/irvingruan/Scrapbook/raw/master/samples/BlackCoverFlow.png)
+
+![Screwdriver](https://github.com/irvingruan/Scrapbook/raw/master/samples/Screwdriver.png)
+
 ## About
 
 Scrapbook is a Python tool that grabs your (or anybody's public) Flickr photos and generates the HTML and CSS files to visualize them in an elegant and intuitive way.
