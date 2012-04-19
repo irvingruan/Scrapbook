@@ -2,9 +2,9 @@
 
 # Written by Irving Y. Ruan <irvingruan@gmail.com>
 
-"""Usage: ./Scrapbook.py [OPTIONS] group_id
+"""Usage: ./Scrapbook.py [OPTIONS] photoset_id
 
-group_id must the flickr NSID for a group
+photoset_id must the flickr NSID for a group
 
 OPTIONS:
   -v or --verbose
@@ -25,18 +25,19 @@ import shutil
 import subprocess
 from getopt import getopt, GetoptError
 
-scrapbook_gallery_path = os.path.expanduser('~/Desktop/Scrapbook/')
+scrapbook_photoset_dir = os.path.expanduser('~/Desktop/Scrapbook/')
 
-DEBUG_FLAG = True
+DEPLOY_SB_FLAG = True
 
 def create_scrapbook_dir():
  
-    try:
-        os.makedirs(scrapbook_gallery_path)
-    except OSError, e:
-        if e.errno != errno.EEXIST:
-            raise Exception("Scrapbook directory already exists!")
-            sys.exit(-1)   
+    try:        
+        if os.path.isdir(scrapbook_photoset_dir):
+            shutil.rmtree(scrapbook_photoset_dir)
+            
+        os.makedirs(scrapbook_photoset_dir)
+    except:
+        sys.stderr.write("Error: Could not make scrapbook photoset directory at %s\n" % scrapbook_photoset_dir)
             
 def generate_html(urls):
     
@@ -62,13 +63,13 @@ def make_scrapbook_data():
     
     try:
         # Copy over the .html, .js, and .css files
-        shutil.move(os.getcwd() + "/index.html", scrapbook_gallery_path)
+        shutil.move(os.getcwd() + "/index.html", scrapbook_photoset_dir)
         
-        rv = subprocess.Popen('cp -rf ' + os.getcwd() + '/website/. ' + scrapbook_gallery_path, shell=True)
+        rv = subprocess.Popen('cp -rf ' + os.getcwd() + '/website/. ' + scrapbook_photoset_dir, shell=True)
         rv.wait()
         
         # Fire up Safari to see the result
-        rv = subprocess.Popen('open /Applications/Safari.app ' + scrapbook_gallery_path + '/index.html', shell=True)
+        rv = subprocess.Popen('open /Applications/Safari.app ' + scrapbook_photoset_dir + '/index.html', shell=True)
         rv.wait()
         
     except:
@@ -98,7 +99,13 @@ def get_photo_urls_for_user(user_id, size, number, equal=False):
     """TO DO"""
     
 def get_photo_urls_for_photoset(photoset_id, size, equal=False):
+    """Retrieves the photo URLS for a photoset"""
+    
     photoset = flickr.Photoset(photoset_id, None, None)
+    info = photoset.getInfo()
+    
+    sys.stdout.write("Grabbing photos for Photoset '%s'...\n" % info[0])
+    
     photos = photoset.getPhotos()
     urls = []
     for photo in photos:
@@ -151,23 +158,44 @@ def main(*argv):
 
     
     if len(sys.argv) < 1:
-        print "You must specify a group"
+        print "You must specify a photoset ID."
         print __doc__
         sys.exit(0)   
         
     id = sys.argv[1]
     
-    print "...Grabbing URLs for photos..."
-    urls = get_photo_urls_for_photoset(id, size, equal)
-    
-    print "...URLs for photoset id " + id + "..."
-    for url in urls:
-        print url
-    
-    if DEBUG_FLAG:
-        create_scrapbook_dir()
-        generate_html(urls)
-        make_scrapbook_data()
+    if os.path.isdir(scrapbook_photoset_dir):
+        sys.stderr.write("Scrapbook photoset gallery already exists at %s. Recreate anyway? (y/n):" % scrapbook_photoset_dir)
+        key = 0
+        try:
+            key = sys.stdin.read(1)
+        except KeyboardInterrupt:
+            key = 0
+            
+        if key == 'y':
+            urls = get_photo_urls_for_photoset(id, size, equal)
+            
+            if DEPLOY_SB_FLAG:
+                create_scrapbook_dir()
+                generate_html(urls)
+                make_scrapbook_data()
+            
+            sys.exit(0)
+            
+        elif key == 'n':
+            sys.stderr.write("\nView your Flickr photoset at " + scrapbook_photoset_dir)
+            sys.exit(0)
+        elif key == 0:
+            sys.stderr.write("\nError: keyboard interrupted.")
+            sys.exit(-1)
+    else:
+        urls = get_photo_urls_for_photoset(id, size, equal)
+        
+        if DEPLOY_SB_FLAG:
+            create_scrapbook_dir()
+            generate_html(urls)
+            make_scrapbook_data()
+
 
 if __name__ == "__main__":
     main()

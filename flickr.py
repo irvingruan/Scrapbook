@@ -17,13 +17,16 @@ AND ACKNOWLEDGEMENT OF AUTHORSHIP REMAIN.
 
 2006-12-19
   Applied patches from Berco Beute and Wolfram Kriesing.
+  
+2012-04-19
+  Added getInfo API for Photosets
 
 """
 
 __author__ = "James Clarke <james@jamesclarke.info>"
 __version__ = "$Rev$"
 __date__ = "$Date$"
-__copyright__ = "Copyright: 2004-2010 James Clarke; Portions: 2007-2008 Joshua Henderson; Portions: 2011 Andrei Vlad Vacariu"
+__copyright__ = "Copyright: 2004-2010 James Clarke; Portions: 2007-2008 Joshua Henderson; Portions: 2011 Andrei Vlad Vacariu; Portions: 2012"
 
 from urllib import urlencode, urlopen
 from xml.dom import minidom
@@ -375,6 +378,16 @@ class Photoset(object):
 
     def __str__(self):
         return '<Flickr Photoset %s>' % self.id
+        
+    def getInfo(self):
+        """Returns the info (Title, Description) for the Photoset"""
+        method = 'flickr.photosets.getInfo'
+        data = _doget(method, photoset_id=self.id)
+        
+        self.__title = data.rsp.photoset.title.text
+        self.__description = data.rsp.photoset.description.text
+        
+        return (data.rsp.photoset.title.text, data.rsp.photoset.description.text)
     
     def getPhotos(self):
         """Returns list of Photos."""
