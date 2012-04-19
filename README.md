@@ -21,7 +21,7 @@ You will need to [sign up](http://www.flickr.com/services/api/misc.api_keys.html
 
 Just paste your key and secret that Flickr provides for you in the the `API_KEY` and `API_SECRET` fields and you're set. Unfortunately, I cannot provide *my* Flickr key and secret, as that would bring up issues of potential abuse. ;-)
 
-Scrapbook runs on any *nix compatible system with Python installed. I plan to "appify" this tool in the future as this project merely serves as a learning experience in data visualization and Python.
+Scrapbook runs on Mac OS X  and needs Python. I plan to "appify" this tool in the future as this project merely serves as a learning experience in data visualization and Python.
 
 ## Usage
 

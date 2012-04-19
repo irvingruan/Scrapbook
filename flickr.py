@@ -19,14 +19,14 @@ AND ACKNOWLEDGEMENT OF AUTHORSHIP REMAIN.
   Applied patches from Berco Beute and Wolfram Kriesing.
   
 2012-04-19
-  Added getInfo API for Photosets
+  Added getInfo API for Photosets from Irving Ruan
 
 """
 
 __author__ = "James Clarke <james@jamesclarke.info>"
 __version__ = "$Rev$"
 __date__ = "$Date$"
-__copyright__ = "Copyright: 2004-2010 James Clarke; Portions: 2007-2008 Joshua Henderson; Portions: 2011 Andrei Vlad Vacariu; Portions: 2012"
+__copyright__ = "Copyright: 2004-2010 James Clarke; Portions: 2007-2008 Joshua Henderson; Portions: 2011 Andrei Vlad Vacariu; Portions: 2012 Irving Ruan"
 
 from urllib import urlencode, urlopen
 from xml.dom import minidom

@@ -4,7 +4,7 @@
 
 """Usage: ./Scrapbook.py [OPTIONS] photoset_id
 
-photoset_id must the flickr NSID for a group
+photoset_id must the flickr NSID for a photoset
 
 OPTIONS:
   -v or --verbose
@@ -30,6 +30,7 @@ scrapbook_photoset_dir = os.path.expanduser('~/Desktop/Scrapbook/')
 DEPLOY_SB_FLAG = True
 
 def create_scrapbook_dir():
+    """Make the output folder to hold the HTML/CSS files"""
  
     try:        
         if os.path.isdir(scrapbook_photoset_dir):
@@ -40,6 +41,7 @@ def create_scrapbook_dir():
         sys.stderr.write("Error: Could not make scrapbook photoset directory at %s\n" % scrapbook_photoset_dir)
             
 def generate_html(urls):
+    """Make the root index.html with references to Flickr photos"""
     
     try:
         html_output = open('index.html', 'w')
@@ -60,6 +62,7 @@ def generate_html(urls):
         sys.exit(-1)          
 
 def make_scrapbook_data():
+    """Copy over the default package for Scrapbook to output directory"""
     
     try:
         # Copy over the .html, .js, and .css files
@@ -99,7 +102,7 @@ def get_photo_urls_for_user(user_id, size, number, equal=False):
     """TO DO"""
     
 def get_photo_urls_for_photoset(photoset_id, size, equal=False):
-    """Retrieves the photo URLS for a photoset"""
+    """Retrieves the photo URLs for a photoset"""
     
     photoset = flickr.Photoset(photoset_id, None, None)
     info = photoset.getInfo()
@@ -117,6 +120,8 @@ def get_photo_urls_for_photoset(photoset_id, size, equal=False):
     return urls
 
 def get_photo_urls_for_group(group_id, size, number, equal=False):
+    """Retrieves the photo URLs for a group"""
+    
     group = flickr.Group(group_id)
     photos = group.getPhotos(per_page=number)
     urls = []
