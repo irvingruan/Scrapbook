@@ -27,6 +27,8 @@ from getopt import getopt, GetoptError
 
 scrapbook_gallery_path = os.path.expanduser('~/Desktop/Scrapbook/')
 
+DEBUG_FLAG = True
+
 def create_scrapbook_dir():
  
     try:
@@ -91,8 +93,23 @@ def get_url(photo, size, equal=False):
             elif not equal:
                 return psize.source
     raise flickr.FlickrError, "No URL found"
+    
+def get_photo_urls_for_user(user_id, size, number, equal=False):
+    """TO DO"""
+    
+def get_photo_urls_for_photoset(photoset_id, size, equal=False):
+    photoset = flickr.Photoset(photoset_id, None, None)
+    photos = photoset.getPhotos()
+    urls = []
+    for photo in photos:
+        try:
+            urls.append(get_url(photo, size, equal))
+        except flickr.FlickrError:
+            if verbose:
+                print "%s has no URL for %s" % (photo, size)
+    return urls
 
-def get_photo_urls(group_id, size, number, equal=False):
+def get_photo_urls_for_group(group_id, size, number, equal=False):
     group = flickr.Group(group_id)
     photos = group.getPhotos(per_page=number)
     urls = []
@@ -138,14 +155,19 @@ def main(*argv):
         print __doc__
         sys.exit(0)   
         
-    group_id = sys.argv[1]
+    id = sys.argv[1]
     
     print "...Grabbing URLs for photos..."
-    urls = get_photo_urls(group_id, size, number, equal)
+    urls = get_photo_urls_for_photoset(id, size, equal)
     
-    create_scrapbook_dir()
-    generate_html(urls)
-    make_scrapbook_data()
+    print "...URLs for photoset id " + id + "..."
+    for url in urls:
+        print url
+    
+    if DEBUG_FLAG:
+        create_scrapbook_dir()
+        generate_html(urls)
+        make_scrapbook_data()
 
 if __name__ == "__main__":
     main()

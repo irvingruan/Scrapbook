@@ -11,11 +11,32 @@ Scrapbook is a Python tool that grabs your (or anybody's public) Flickr photos a
 
 ## Requirements
 
-You will need to sign up for a Flickr API key, which is free! After you [sign up](http://www.flickr.com/services/api/misc.api_keys.html) for a key, you will need to add it to the included `API_KEY.txt`.
+You will need to [sign up](http://www.flickr.com/services/api/misc.api_keys.html)) for a Flickr API key, which is free! After you get a key (which is right after you sign up), you will need to add it to the included file, `config.py`.
+
+Just paste in your key and secret that Flickr provides for you in the the `API_KEY` and `API_SECRET` fields and you're set. Unfortunately, I cannot provide *my* Flickr key and secret, as that would bring up issues of potential abuse. ;-)
+
+Scrapbook runs on any *nix compatible system with Python installed. I plan to "appify" this tool in the future as this project merely serves as a learning experience in data visualization and Python.
 
 ## Usage
 
-TO DO
+The current version only supports grabbing photos by a specific Flickr Photoset ID. I'm sticking with this [for now] for two reasons:
+
+1. Flickr Photoset IDs are easy to obtain. They exist in the URL.
+2. Some people have hundreds, if not thousands, of photos. Grabbing *all* the photos for a user is expensive on the API.
+
+I plan on supporting grabbing photos by galleries and groups in the future, though.
+
+In the meantime, to run Scrapbook:
+
+`./Scrapbook photoset_id`
+
+Where `photoset_id` is the ID that corresponds to a Flickr Photoset. For example, one of my Photosets, "Perspectives in Design", is located at the URL [<http://www.flickr.com/photos/irvingruan/sets/72157628025609024/>](http://www.flickr.com/photos/irvingruan/sets/72157628025609024/). The Photoset ID is thus `72157628025609024`.
+
+Simply doing:
+
+`./Scrapbook.py 72157628025609024`
+
+Will generate the visualization for all photos in that Photoset.
 
 ## Legal
 
